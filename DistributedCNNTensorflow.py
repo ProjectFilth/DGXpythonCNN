@@ -28,18 +28,18 @@ def model_build(img_height, img_width, colour_chanels, hl1, hl2, hl3, hl4, hl5, 
     normalization_layer = tf.keras.layers.experimental.preprocessing.Rescaling(1./255)
 
     model = models.Sequential()
-    model.add(layers.Conv2D(512, (3, 3), activation='tanh', input_shape=(img_height, img_width, colour_chanels)))
+    model.add(layers.Conv2D(512, (3, 3), activation='swish', input_shape=(img_height, img_width, colour_chanels)))
     model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Conv2D(1024, (3, 3), activation='tanh'))
+    model.add(layers.Conv2D(1024, (3, 3), activation='swish'))
     model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Conv2D(2048, (3, 3), activation='tanh'))
+    model.add(layers.Conv2D(2048, (3, 3), activation='swish'))
     model.add(layers.Flatten())
-    model.add(layers.Dense(hl1, activation='tanh'))
-    model.add(layers.Dense(hl2, activation='tanh'))
-    model.add(layers.Dense(hl3, activation='tanh'))
-    model.add(layers.Dense(hl4, activation='tanh'))
-    model.add(layers.Dense(hl5, activation='tanh'))
-    model.add(layers.Dense(hl6, activation='tanh'))
+    model.add(layers.Dense(hl1, activation='swish'))
+    model.add(layers.Dense(hl2, activation='swish'))
+    model.add(layers.Dense(hl3, activation='swish'))
+    model.add(layers.Dense(hl4, activation='swish'))
+    model.add(layers.Dense(hl5, activation='swish'))
+    model.add(layers.Dense(hl6, activation='swish'))
     model.add(layers.Dense(num_classes, activation='softmax'))
     model.summary()
     model.compile(
@@ -52,15 +52,15 @@ def model_build(img_height, img_width, colour_chanels, hl1, hl2, hl3, hl4, hl5, 
 #os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 time_start = tf.timestamp()
 
-batch_size = 100
+batch_size = 250
 num_classes = 10
 num_epochs = 200
-hl1 = 512
-hl2 = 512
-hl3 = 512
-hl4 = 512
-hl5 = 512
-hl6 = 512
+hl1 = 1024
+hl2 = 1024
+hl3 = 1024
+hl4 = 1024
+hl5 = 1024
+hl6 = 1024
 img_height = 64
 img_width = 64
 colour_chanels = 3
