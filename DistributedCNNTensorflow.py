@@ -65,7 +65,7 @@ img_height = 64
 img_width = 64
 colour_chanels = 3
 #RGB for colour images grayscale for b&w
-colour_option = 'grayscale'
+colour_option = 'RGB'
 #title = "Digits "
 #train_dir = "/home/ks222/chrisknight/PythonCNN/Datasets/Digits/train"
 #val_dir = "/home/ks222/chrisknight/PythonCNN/Datasets/Digits/test"
