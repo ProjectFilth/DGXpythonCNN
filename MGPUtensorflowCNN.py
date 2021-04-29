@@ -48,7 +48,7 @@ def model_build(img_height, img_width, colour_chanels, hl1, hl2, hl3, hl4, hl5, 
       metrics=['accuracy'])
     return model
 
-#strategy = tf.distribute.MirroredStrategy()
+strategy = tf.distribute.MirroredStrategy()
 #os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 time_start = tf.timestamp()
 
@@ -87,16 +87,14 @@ AUTOTUNE = tf.data.AUTOTUNE
 
 multi_training = multi_training.cache().prefetch(buffer_size=AUTOTUNE)
 multi_validation = multi_validation.cache().prefetch(buffer_size=AUTOTUNE)
-#with strategy.scope():
-
-multi_model = model_build(img_height, img_width, colour_chanels, hl1, hl2, hl3, hl4, hl5, hl6)
-history = multi_model.fit(
-  multi_training,
-  validation_data=multi_validation,
-  epochs=num_epochs,
-  verbose=1
-)
-
+with strategy.scope():
+    multi_model = model_build(img_height, img_width, colour_chanels, hl1, hl2, hl3, hl4, hl5, hl6)
+    history = multi_model.fit(
+        multi_training,
+        validation_data=multi_validation,
+        epochs=num_epochs,
+        verbose=1
+        )
 time_end = tf.timestamp()
 evaluation = str(multi_model.evaluate(multi_validation,verbose = 2))
 last_chars = evaluation[ 20: 27: 1]
